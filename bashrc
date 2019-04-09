@@ -5,11 +5,11 @@ parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-# default PS1 prompt
-#PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\$\[\e[;76m\] '
-
 # PS1 prompt with git branch 
 PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[0;33m\]$(parse_git_branch)\e[0;34m\]\$\[\e[;76m\] '
+
+# default PS1 prompt
+#PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\$\[\e[;76m\] '
 
 # bash history
 export HISTCONTROL=ignoredups
@@ -20,8 +20,8 @@ export HISTFILESIZE=10000
 stty -ixon
 
 # reload bashrc
-alias vb='vi ~/.bashrc'
-alias vbd='. ~/.bashrc'
+alias vb='vim ~/.bashrc'
+alias sb='. ~/.bashrc'
 
 alias t='tmux'
 alias c='clear'
@@ -33,7 +33,14 @@ alias mkdir='mkdir -v'
 alias chmod='chmod -v'
 alias chgrp='chgrp -v'
 alias chown='chown -v'
+alias diff='colordiff'
 alias ls="ls --color=always"
+
+
+# cd to frequently used directories:
+alias cdsh="cd ~/Documents/Programming/bash/"
+alias cdpl="cd ~/Documents/Programming/perl/"
+alias cdpy="cd ~/Documents/Programming/python/"
 
 # start service shortcuts
 alias start_ovs="sudo systemctl start ovs-vswitchd"
@@ -57,12 +64,10 @@ start_ssh_agent() {
         ssh-add
     fi
 
-    ssh-add -l | grep -i rsa
+    ssh-add -l | grep -i rsa > /dev/null
     RESULT=$?
-    if [ $RESULT -eq 0 ]; 
+    if [ $RESULT -ne 0 ]; 
     then
-        echo "ssh-key already in keyring"
-    else
         echo "ssh-key not in keyring"
         ssh-add
     fi
