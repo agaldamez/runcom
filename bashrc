@@ -1,15 +1,15 @@
 # ~/.bashrc file
 
 # git branch bashrc
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
+#parse_git_branch() {
+#    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+#}
 
 # PS1 prompt with git branch 
-PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[0;33m\]$(parse_git_branch)\e[0;34m\]\$\[\e[;76m\] '
+#PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[0;33m\]$(parse_git_branch)\e[0;34m\]\$\[\e[;76m\] '
 
-# default PS1 prompt
-#PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\$\[\e[;76m\] '
+#default PS1 prompt
+PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\$\[\e[;76m\] '
 
 # bash history
 export HISTCONTROL=ignoredups
@@ -33,9 +33,11 @@ alias mkdir='mkdir -v'
 alias chmod='chmod -v'
 alias chgrp='chgrp -v'
 alias chown='chown -v'
-alias diff='colordiff'
+#alias diff='colordiff'
 alias ls="ls --color=always"
 
+# docker shortcuts
+alias dkrm='docker rm $(docker ps -qa)'
 
 # cd to frequently used directories:
 alias cdsh="cd ~/Documents/Programming/bash/"
@@ -58,7 +60,7 @@ export BC_ENV_ARGS=$HOME/.bcrc
 
 # ssh-agent
 start_ssh_agent() {
-    if [ -z "$SSH_AUTH_SOCK" ]; 
+    if [ -z "$SSH_AUTH_SOCK" ] 
     then
         eval $(ssh-agent -s)
         ssh-add
@@ -66,7 +68,7 @@ start_ssh_agent() {
 
     ssh-add -l | grep -i rsa > /dev/null
     RESULT=$?
-    if [ $RESULT -ne 0 ]; 
+    if [ $RESULT -ne 0 ] 
     then
         echo "ssh-key not in keyring"
         ssh-add
@@ -86,4 +88,12 @@ man() {
        LESS_TERMCAP_ue=$(printf "\e[0m") \
        LESS_TERMCAP_us=$(printf "\e[34m") \
            man "$@"
+}
+
+# print 256-colour
+colour() { 
+    for i in {0..255}
+    do 
+        printf "\x1b[38;5;${i}mcolour${i}\x1b[0m\n"
+    done
 }
