@@ -1,0 +1,19 @@
+# screenrc 
+
+# escape combination ctrl+b 
+escape ^Bb
+
+# enable status message from screen
+hardstatus on
+
+# status messages from screen 
+hardstatus alwayslastline 
+
+# hardstatus line contents 
+hardstatus string '%{= kg}[ %{y}%H %{g}][%= %{=kw}%?%-Lw%?%{y}(%{W}%n*%f%t%?(%u)%?%{y})%{g}%?%+Lw%?%?%= %{g}][%{y}%Y-%m-%d %{W}%c %{g}]'
+
+# scrollback buffer
+defscrollback 5000
+
+# enable scrollwheel
+termcapinfo xterm* ti@:te@
