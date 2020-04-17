@@ -1,15 +1,16 @@
 # ~/.bashrc file
 
 # git branch bashrc
-#parse_git_branch() {
-#    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-#}
+parse_git_branch() {
+   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
 
 # PS1 prompt with git branch 
-#PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[0;33m\]$(parse_git_branch)\e[0;34m\]\$\[\e[;76m\] '
+#PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[0;33m\]$(parse_git_branch) \[\e[0;34m\]\$\[\e[;76m\] '
+PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[91m\]$(parse_git_branch) \[\e[0;34m\]\$\[\e[;76m\] '
 
 #default PS1 prompt
-PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\$\[\e[;76m\] '
+#PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\$\[\e[;76m\] '
 
 # bash history
 export HISTCONTROL=ignoredups
@@ -18,6 +19,9 @@ export HISTFILESIZE=10000
 
 # enable forward i-search in history
 stty -ixon
+
+# autocorrect typos in path names when using 'cd'
+shopt -s cdspell 
 
 # reload bashrc
 alias vb='vim ~/.bashrc'
@@ -38,6 +42,7 @@ alias ls="ls --color=always"
 
 # docker shortcuts
 alias dkrm='docker rm $(docker ps -qa)'
+alias start_docker="sudo systemctl start docker"
 
 # cd to frequently used directories:
 alias cdsh="cd ~/Documents/Programming/bash/"
@@ -46,7 +51,6 @@ alias cdpy="cd ~/Documents/Programming/python/"
 
 # start service shortcuts
 alias start_ovs="sudo systemctl start ovs-vswitchd"
-alias start_docker="sudo systemctl start docker"
 alias start_libvirt="sudo systemctl start libvirtd"
 
 # directory navigation aliases
