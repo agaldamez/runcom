@@ -40,6 +40,9 @@ alias chown='chown -v'
 #alias diff='colordiff'
 alias ls="ls --color=always"
 
+# run virsh commands without sudo 
+alias virsh="virsh --connect qemu:///system"
+
 # docker shortcuts
 alias dkrm='docker rm $(docker ps -qa)'
 alias start_docker="sudo systemctl start docker"
