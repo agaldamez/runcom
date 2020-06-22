@@ -13,9 +13,10 @@ PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[91m\]$(parse_git_branch) \[\e[0;34
 #PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\$\[\e[;76m\] '
 
 # bash history
+export HISTSIZE=100000
 export HISTCONTROL=ignoredups
-export HISTSIZE=10000
-export HISTFILESIZE=10000
+export HISTFILESIZE=100000
+export HISTTIMEFORMAT="%F %T "
 
 # enable forward i-search in history
 stty -ixon
@@ -45,7 +46,8 @@ alias virsh="virsh --connect qemu:///system"
 
 # docker shortcuts
 alias dkrm='docker rm $(docker ps -qa)'
-alias start_docker="sudo systemctl start docker"
+alias dkvrm='docker volume rm $(docker volume ls -q)'
+alias start-docker="sudo systemctl start docker"
 
 # cd to frequently used directories:
 alias cdsh="cd ~/Documents/Programming/bash/"
@@ -53,8 +55,8 @@ alias cdpl="cd ~/Documents/Programming/perl/"
 alias cdpy="cd ~/Documents/Programming/python/"
 
 # start service shortcuts
-alias start_ovs="sudo systemctl start ovs-vswitchd"
-alias start_libvirt="sudo systemctl start libvirtd"
+alias start-ovs="sudo systemctl start ovs-vswitchd"
+alias start-libvirt="sudo systemctl start libvirtd"
 
 # directory navigation aliases
 alias ..='cd ..'
