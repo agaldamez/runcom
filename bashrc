@@ -42,6 +42,9 @@ alias chown='chown -v'
 #alias diff='colordiff'
 alias ls="ls --color=always"
 
+# run kpcli in read only mode
+alias kpcli='kpcli --readonly --kdb'
+
 # run virsh commands without sudo 
 alias virsh="virsh --connect qemu:///system"
 
