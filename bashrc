@@ -6,11 +6,14 @@ parse_git_branch() {
 }
 
 # PS1 prompt with git branch 
-#PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[0;33m\]$(parse_git_branch) \[\e[0;34m\]\$\[\e[;76m\] '
 PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[91m\]$(parse_git_branch) \[\e[0;34m\]\$\[\e[;76m\] '
 
 #default PS1 prompt
 #PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\$\[\e[;76m\] '
+
+# set default text editor
+export EDITOR=vim
+export VISUAL=vim
 
 # bash history
 export HISTSIZE=100000
