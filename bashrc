@@ -71,6 +71,11 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
+# dynmaic port forwarding (SOCKS proxy)
+alias ssh-tunnel='ssh -D 8080 -f -q -N $USER@$TUNNEL'
+# reverse ssh tunnel
+alias rssh-tunnel='ssh -R $SOURCE:SRC:DESTINATION:DST -N -f $USER@SOURCE'
+
 # bcrc 
 export BC_ENV_ARGS=$HOME/.bcrc
 
