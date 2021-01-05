@@ -42,8 +42,9 @@ alias mkdir='mkdir -v'
 alias chmod='chmod -v'
 alias chgrp='chgrp -v'
 alias chown='chown -v'
-#alias diff='colordiff'
+alias diff='colordiff'
 alias ls="ls --color=always"
+alias whitespace="sed 's/ /·/g;s/\t/￫/g;s/\r/§/g;s/$/¶/g'"
 
 # run kpcli in read only mode
 alias kpcli='kpcli --readonly --kdb'
@@ -80,34 +81,33 @@ alias rssh-tunnel='ssh -R $SOURCE:SRC:DESTINATION:DST -N -f $USER@SOURCE'
 export BC_ENV_ARGS=$HOME/.bcrc
 
 # ssh-agent
-#start_ssh_agent() {
-#    if [ -z "$SSH_AUTH_SOCK" ] 
-#    then
-#        eval $(ssh-agent -s)
-#        ssh-add
-#    fi
-#
-#    ssh-add -l | grep -i rsa > /dev/null
-#    RESULT=$?
-#    if [ $RESULT -ne 0 ] 
-#    then
-#        echo "ssh-key not in keyring"
-#        ssh-add
-#    fi
-#}
-#start_ssh_agent 
-
-# gpg-agent for ssh
-start_gpg-agent() {
+start_ssh_agent() {
     if [ -z "$SSH_AUTH_SOCK" ]
     then
-        #GPG_TTY=$(tty)
-        #export GPG_TTY
-        export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-        # eval $(gpg-agent --daemon)
+        eval $(ssh-agent -s)
+        ssh-add
+    fi
+
+    ssh-add -l | grep -i rsa > /dev/null
+    if [ $? -ne 0 ] 
+    then
+        echo "ssh-key not in keyring"
+        ssh-add
     fi
 }
-start_gpg-agent
+start_ssh_agent 
+
+# gpg-agent for ssh
+#start_gpg-agent() {
+#    if [ -z "$SSH_AUTH_SOCK" ]
+#    then
+#       GPG_TTY=$(tty)
+#       export GPG_TTY
+#       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+#       eval $(gpg-agent --daemon)
+#    fi
+#}
+#start_gpg-agent
 
 # colorized man pages
 export GROFF_NO_SGR=yes
