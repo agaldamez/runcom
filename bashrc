@@ -31,6 +31,8 @@ shopt -s cdspell
 alias vb='vim ~/.bashrc'
 alias sb='. ~/.bashrc'
 
+alias ll='ls -l'
+alias lls='ls -la'
 alias t='tmux'
 alias c='clear'
 alias e='exit'
@@ -46,9 +48,6 @@ alias diff='colordiff'
 alias ls="ls --color=always"
 alias whitespace="sed 's/ /·/g;s/\t/￫/g;s/\r/§/g;s/$/¶/g'"
 
-# run kpcli in read only mode
-alias kpcli='kpcli --readonly --kdb'
-
 # run virsh commands without sudo 
 alias virsh="virsh --connect qemu:///system"
 
@@ -61,10 +60,6 @@ alias start-docker="sudo systemctl start docker"
 alias cdsh="cd ~/Documents/Programming/bash/"
 alias cdpl="cd ~/Documents/Programming/perl/"
 alias cdpy="cd ~/Documents/Programming/python/"
-
-# start service shortcuts
-alias start-ovs="sudo systemctl start ovs-vswitchd"
-alias start-libvirt="sudo systemctl start libvirtd"
 
 # directory navigation aliases
 alias ..='cd ..'
