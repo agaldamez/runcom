@@ -53,6 +53,7 @@ alias virsh="virsh --connect qemu:///system"
 
 # docker shortcuts
 alias dkrm='docker rm $(docker ps -qa)'
+alias dkrmi='docker rmi $(docker images -q)'
 alias dkvrm='docker volume rm $(docker volume ls -q)'
 alias start-docker="sudo systemctl start docker"
 
@@ -77,7 +78,7 @@ export BC_ENV_ARGS=$HOME/.bcrc
 
 # ssh-agent
 start_ssh_agent() {
-    if [ -z "$SSH_AUTH_SOCK" ]
+    if [ -z "$SSH_AUTH_SOCK" ] 
     then
         eval $(ssh-agent -s)
         ssh-add
