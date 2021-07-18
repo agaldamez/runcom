@@ -1,0 +1,36 @@
+#!/bin/bash
+# bash wrappers for docker run commands
+
+# docker rm function
+docker_rm(){
+    local name=$1
+    local state
+    state=$(docker inspect --format "{{.State.Running}}" "$name" 2>/dev/null)
+
+    if [[ "$state" == "false" ]]
+    then
+        docker rm "$name"
+    fi
+}
+
+virt-manager(){
+    docker_rm virt-manager
+    
+    docker run -d \
+        -e DISPLAY=$DISPLAY \
+        -v /home/$USER/.ssh/known_hosts:/root/.ssh/known_hosts:ro \
+        -v /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock \
+        --net=host \
+        --name virt-manager \
+        virt-manager
+}
+postman(){
+    docker_rm postman
+
+    docker run -it -d \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v /home/$USER/.config/Postman:/home/developer/.config/Postman \
+        -e DISPLAY=$DISPLAY \
+        --name postman \
+        postman
+}
