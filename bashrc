@@ -1,5 +1,11 @@
 # ~/.bashrc file
 
+# source dockerfunc for docker run commands 
+if [[ -f ~/.dockerfunc ]]
+then
+   source .dockerfunc
+fi
+
 # git branch bashrc
 parse_git_branch() {
    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -37,6 +43,7 @@ alias t='tmux'
 alias c='clear'
 alias e='exit'
 alias st='storm'
+alias h='history'
 alias rm='rm -vi'
 alias cp='cp -vi'
 alias mv='mv -vi'
@@ -56,6 +63,11 @@ alias dkrm='docker rm $(docker ps -qa)'
 alias dkrmi='docker rmi $(docker images -q)'
 alias dkvrm='docker volume rm $(docker volume ls -q)'
 alias start-docker="sudo systemctl start docker"
+
+# Search top 10 tags for a Docker image
+dockertags() {
+   curl -s "https://registry.hub.docker.com/v2/repositories/library/$1/tags/"|jq '."results"[]["name"]'
+}
 
 # cd to frequently used directories:
 alias cdsh="cd ~/Documents/Programming/bash/"
