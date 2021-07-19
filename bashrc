@@ -3,7 +3,7 @@
 # source dockerfunc for docker run commands 
 if [[ -f ~/.dockerfunc ]]
 then
-   source .dockerfunc
+   source ~/.dockerfunc
 fi
 
 # git branch bashrc

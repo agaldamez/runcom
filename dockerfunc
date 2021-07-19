@@ -16,6 +16,7 @@ docker_rm(){
 virt-manager(){
     docker_rm virt-manager
     
+    xhost +
     docker run -d \
         -e DISPLAY=$DISPLAY \
         -v /home/$USER/.ssh/known_hosts:/root/.ssh/known_hosts:ro \
