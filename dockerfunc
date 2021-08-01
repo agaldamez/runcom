@@ -13,18 +13,6 @@ docker_rm(){
     fi
 }
 
-virt-manager(){
-    docker_rm virt-manager
-    
-    xhost +
-    docker run -d \
-        -e DISPLAY=$DISPLAY \
-        -v /home/$USER/.ssh/known_hosts:/root/.ssh/known_hosts:ro \
-        -v /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock \
-        --net=host \
-        --name virt-manager \
-        virt-manager
-}
 postman(){
     docker_rm postman
 
@@ -34,4 +22,24 @@ postman(){
         -e DISPLAY=$DISPLAY \
         --name postman \
         postman
+}
+terraform(){
+    docker run -it --rm \
+        -v "${HOME}:${HOME}:ro" \
+        -v "$(pwd):/usr/src/repo" \
+        --workdir /usr/src/repo \
+        --name terraform \
+        terraform "$@"
+}
+virt-manager(){
+    docker_rm virt-manager
+    
+    xhost + 1> /dev/null
+    docker run -d \
+        -e DISPLAY=$DISPLAY \
+        -v /home/$USER/.ssh/known_hosts:/root/.ssh/known_hosts:ro \
+        -v /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock \
+        --net=host \
+        --name virt-manager \
+        virt-manager
 }
