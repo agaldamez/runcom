@@ -16,12 +16,12 @@ docker_rm(){
 network-miner(){
     docker_rm network-miner
 
-	docker run -it -d \
-    	-e DISPLAY=$DISPLAY \
+    docker run -it -d \
+        -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-   		-v "$(pwd):/home/networkminer" \
+        -v "$(pwd):/home/networkminer" \
         --name network-miner \
-   		network-miner
+        network-miner
 }
 postman(){
     docker_rm postman
