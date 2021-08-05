@@ -13,6 +13,14 @@ docker_rm(){
     fi
 }
 
+ansible(){
+    docker run -it --rm \
+        -v ${PWD}:/etc/ansible \
+        -v ${HOME}/.ssh:/root/.ssh:ro \
+        -e SSH_AUTH_SOCK \
+        --name ansible \
+        ansible "$@"
+}
 network-miner(){
     docker_rm network-miner
 
