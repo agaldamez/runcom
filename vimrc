@@ -15,6 +15,7 @@ set shiftwidth=4
 " Tabs are spaces
 set expandtab 
 
+
 " vim-plug automatic installation
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -27,6 +28,15 @@ call plug#begin('~/.vim/plugged')
 
 " ansible-vim 
 Plug 'pearofducks/ansible-vim'
+
+" vim-json
+Plug 'elzr/vim-json'
+
+" vim-systemd-syntax
+Plug 'wgwoods/vim-systemd-syntax'
+
+" vim-terraform
+Plug 'hashivim/vim-terraform'
 
 " Initialize plugin system
 call plug#end()
