@@ -69,7 +69,11 @@ dockertags() {
    curl -s "https://registry.hub.docker.com/v2/repositories/library/$1/tags/"|jq '."results"[]["name"]'
 }
 
+# vhosts
+alias hosts='sudo vim /etc/hosts'
+
 # cd to frequently used directories:
+alias dl="cd ~/Downloads"
 alias cdsh="cd ~/Documents/Programming/bash/"
 alias cdpl="cd ~/Documents/Programming/perl/"
 alias cdpy="cd ~/Documents/Programming/python/"
@@ -93,7 +97,7 @@ start_ssh_agent() {
     if [ -z "$SSH_AUTH_SOCK" ] 
     then
         eval $(ssh-agent -s)
-        ssh-add
+        ssh-add id_rsa
     fi
 
     ssh-add -l | grep -i rsa > /dev/null
