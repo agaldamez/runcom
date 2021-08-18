@@ -15,6 +15,9 @@ set shiftwidth=4
 " Tabs are spaces
 set expandtab 
 
+" Don't use swapfile
+set noswapfile
+
 
 " vim-plug automatic installation
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -43,6 +46,9 @@ Plug 'Vimjas/vim-python-pep8-indent'
 
 " vim-systemd-syntax
 Plug 'wgwoods/vim-systemd-syntax'
+
+" vim-surround
+Plug 'tpope/vim-surround'
 
 " vim-terraform
 Plug 'hashivim/vim-terraform'
