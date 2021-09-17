@@ -14,12 +14,31 @@ docker_rm(){
 }
 
 ansible(){
-    docker run -it --rm \
-        -v ${PWD}:/etc/ansible \
-        -v ${HOME}/.ssh:/root/.ssh:ro \
-        -e SSH_AUTH_SOCK \
-        --name ansible \
-        ansible "$@"
+    if [[ -n "$(which ansible)" ]]; then
+        "$(which ansible)" "$@"
+    else
+        docker run -it --rm \
+            -v "${PWD}:/root" \
+            -v "${HOME}/.ssh:/root/.ssh:ro" \
+            -e SSH_AUTH_SOCK \
+            --workdir /root \
+            --name ansible \
+            ansible "$@"
+    fi
+}
+ansible-playbook(){
+    if [[ -n "$(which ansible-playbook)" ]]; then
+        "(which ansible-playbook)" "$@"
+    else
+        docker run -it --rm \
+            -v ${PWD}:/etc/ansible \
+            -v ${HOME}/.ssh:/root/.ssh:ro \
+            -e SSH_AUTH_SOCK \
+            --workdir /root \
+            --entrypoint=ansible-playbook \
+            --name ansible-playbook \
+            ansible "$@"
+    fi
 }
 network-miner(){
     docker_rm network-miner
@@ -43,12 +62,23 @@ postman(){
 }
 terraform(){
     docker run -it --rm \
-        -v "${HOME}:${HOME}:ro" \
+        -v "${HOME}/.ssh:/home/terraform/.ssh:ro" \
+        -e SSH_AUTH_SOCK \
         -v "$(pwd):/usr/src/repo" \
         -v /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock \
         --workdir /usr/src/repo \
         --name terraform \
         terraform "$@"
+}
+splunk(){
+    docker run -d \
+        -p 8000:8000 \
+        -v splunk-etc:/opt/splunk/etc \
+        -v splunk-var:/opt/splunk/var \
+        -e "SPLUNK_START_ARGS=--accept-license" \
+        -e "SPLUNK_PASSWORD=password" \
+        --name splunk \
+        splunk/splunk:8.2.2
 }
 virt-manager(){
     docker_rm virt-manager
@@ -56,7 +86,7 @@ virt-manager(){
     xhost + 1> /dev/null
     docker run -d \
         -e DISPLAY=$DISPLAY \
-        -v /home/$USER/.ssh/known_hosts:/root/.ssh/known_hosts:ro \
+        -v /home/$USER/.ssh/known_hosts:/home/virt-manager/.ssh/known_hosts:ro \
         -v /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock \
         --net=host \
         --name virt-manager \
