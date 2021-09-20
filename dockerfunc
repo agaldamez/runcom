@@ -14,31 +14,23 @@ docker_rm(){
 }
 
 ansible(){
-    if [[ -n "$(which ansible)" ]]; then
-        "$(which ansible)" "$@"
-    else
-        docker run -it --rm \
-            -v "${PWD}:/root" \
-            -v "${HOME}/.ssh:/root/.ssh:ro" \
-            -e SSH_AUTH_SOCK \
-            --workdir /root \
-            --name ansible \
-            ansible "$@"
-    fi
+    docker run -it --rm \
+        -v "${PWD}:/root" \
+        -v "${HOME}/.ssh:/root/.ssh:ro" \
+        -e SSH_AUTH_SOCK \
+        --workdir /root \
+        --name ansible \
+        ansible "$@"
 }
 ansible-playbook(){
-    if [[ -n "$(which ansible-playbook)" ]]; then
-        "(which ansible-playbook)" "$@"
-    else
-        docker run -it --rm \
-            -v ${PWD}:/etc/ansible \
-            -v ${HOME}/.ssh:/root/.ssh:ro \
-            -e SSH_AUTH_SOCK \
-            --workdir /root \
-            --entrypoint=ansible-playbook \
-            --name ansible-playbook \
-            ansible "$@"
-    fi
+    docker run -it --rm \
+        -v ${PWD}:/etc/ansible \
+        -v ${HOME}/.ssh:/root/.ssh:ro \
+        -e SSH_AUTH_SOCK \
+        --workdir /root \
+        --entrypoint=ansible-playbook \
+        --name ansible-playbook \
+        ansible "$@"
 }
 network-miner(){
     docker_rm network-miner
@@ -90,5 +82,5 @@ virt-manager(){
         -v /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock \
         --net=host \
         --name virt-manager \
-        virt-manager
+        virt-manager-test
 }
