@@ -82,5 +82,5 @@ virt-manager(){
         -v /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock \
         --net=host \
         --name virt-manager \
-        virt-manager-test
+        virt-manager
 }
