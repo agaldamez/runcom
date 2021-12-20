@@ -32,6 +32,15 @@ ansible-playbook(){
         --name ansible-playbook \
         ansible "$@"
 }
+mysql-world(){
+    docker run -d \
+        -e MARIADB_ROOT_PASSWORD=password \
+        -e MARIADB_DATABASE=world \
+        -v $(pwd)/world.sql:/docker-entrypoint-initdb.d/world.sql \
+        -p 3306:3306 \
+        --name mariadb \
+        mariadb
+}
 network-miner(){
     docker_rm network-miner
 
