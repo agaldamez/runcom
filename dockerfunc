@@ -32,11 +32,11 @@ ansible-playbook(){
         --name ansible-playbook \
         ansible "$@"
 }
-mysql-world(){
+mysql-load(){
     docker run -d \
         -e MARIADB_ROOT_PASSWORD=password \
-        -e MARIADB_DATABASE=world \
-        -v $(pwd)/world.sql:/docker-entrypoint-initdb.d/world.sql \
+        -v $(pwd)/"$@":/docker-entrypoint-initdb.d \
+        --workdir /docker-entrypoint-initdb.d \
         -p 3306:3306 \
         --name mariadb \
         mariadb
