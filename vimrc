@@ -29,9 +29,6 @@ endif
 " vim-plug plugin manager
 call plug#begin('~/.vim/plugged')
 
-" ansible-vim 
-Plug 'pearofducks/ansible-vim'
-
 " vim-json
 Plug 'elzr/vim-json'
 
@@ -40,6 +37,9 @@ Plug 'preservim/nerdtree'
 
 " vim-perl
 Plug 'vim-perl/vim-perl'
+
+" vim-ps1
+Plug 'pprovost/vim-ps1'
 
 " vim-python-pep8-indent
 Plug 'Vimjas/vim-python-pep8-indent'

@@ -70,13 +70,14 @@ dockertags() {
 }
 
 # vhosts
-alias hosts='sudo vim /etc/hosts'
+alias vhosts='sudo vim /etc/hosts'
 
 # cd to frequently used directories:
 alias dl="cd ~/Downloads"
 alias cdsh="cd ~/Documents/Programming/bash/"
 alias cdpl="cd ~/Documents/Programming/perl/"
 alias cdpy="cd ~/Documents/Programming/python/"
+alias cdps="cd ~/Documents/Programming/powershell/"
 
 # directory navigation aliases
 alias ..='cd ..'
