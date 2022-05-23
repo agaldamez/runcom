@@ -13,25 +13,25 @@ docker_rm(){
     fi
 }
 
-ansible(){
-    docker run -it --rm \
-        -v "${PWD}:/root" \
-        -v "${HOME}/.ssh:/root/.ssh:ro" \
-        -e SSH_AUTH_SOCK \
-        --workdir /root \
-        --name ansible \
-        ansible "$@"
-}
-ansible-playbook(){
-    docker run -it --rm \
-        -v ${PWD}:/etc/ansible \
-        -v ${HOME}/.ssh:/root/.ssh:ro \
-        -e SSH_AUTH_SOCK \
-        --workdir /root \
-        --entrypoint=ansible-playbook \
-        --name ansible-playbook \
-        ansible "$@"
-}
+#ansible(){
+#    docker run -it --rm \
+#        -v "${PWD}:/root" \
+#        -v "${HOME}/.ssh:/root/.ssh:ro" \
+#        -e SSH_AUTH_SOCK \
+#        --workdir /root \
+#        --name ansible \
+#        ansible "$@"
+#}
+#ansible-playbook(){
+#    docker run -it --rm \
+#        -v ${PWD}:/etc/ansible \
+#        -v ${HOME}/.ssh:/root/.ssh:ro \
+#        -e SSH_AUTH_SOCK \
+#        --workdir /root \
+#        --entrypoint=ansible-playbook \
+#        --name ansible-playbook \
+#        ansible "$@"
+#}
 mysql-load(){
     docker run -d \
         -e MARIADB_ROOT_PASSWORD=password \
