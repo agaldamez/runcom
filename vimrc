@@ -6,6 +6,9 @@ set background=dark
 " Display line numbers on the left 
 set number
 
+" Enable relative number
+set relativenumber
+
 " Number of visual spaces per tab
 set tabstop=4
 
@@ -17,6 +20,12 @@ set expandtab
 
 " Don't use swapfile
 set noswapfile
+
+" Makes backspace key more powerful
+set backspace=indent,eol,start
+
+" Search case insensitive
+set ignorecase
 
 
 " vim-plug automatic installation

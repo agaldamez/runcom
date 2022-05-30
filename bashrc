@@ -27,6 +27,9 @@ export HISTCONTROL=ignoredups
 export HISTFILESIZE=100000
 export HISTTIMEFORMAT="%F %T "
 
+# store history immediately
+PROMPT_COMMAND='history -a'
+
 # enable forward i-search in history
 stty -ixon
 
@@ -99,6 +102,7 @@ start_ssh_agent() {
     then
         eval $(ssh-agent -s)
         ssh-add id_rsa
+        #ssh-add `ls -1 ~/.ssh | grep -P 'id_rsa(?!.*.pub)'`
     fi
 
     ssh-add -l | grep -i rsa > /dev/null
