@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# reload bashrc
+alias vb='vim ~/.bashrc'
+alias sb='. ~/.bashrc'
+
+alias ll='ls -l'
+alias lls='ls -la'
+alias t='tmux'
+alias c='clear'
+alias e='exit'
+alias st='storm'
+alias h='history'
+alias rm='rm -vi'
+alias cp='cp -vi'
+alias mv='mv -vi'
+alias mkdir='mkdir -v'
+alias chmod='chmod -v'
+alias chgrp='chgrp -v'
+alias chown='chown -v'
+alias diff='colordiff'
+alias ls="ls --color=always"
+alias whitespace="sed 's/ /·/g;s/\t/￫/g;s/\r/§/g;s/$/¶/g'"
+
+# run virsh commands without sudo
+alias virsh="virsh --connect qemu:///system"
+
+# docker shortcuts
+alias dkrm='docker rm $(docker ps -qa)'
+alias dkrmi='docker rmi $(docker images -q)'
+alias dkvrm='docker volume rm $(docker volume ls -q)'
+
+# vhosts
+alias vhosts='sudo vim /etc/hosts'
+
+# directory navigation aliases
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# cd to frequently used directories:
+alias dl="cd ~/Downloads"
+alias cdsh="cd ~/Documents/Programming/bash/"
+alias cdpl="cd ~/Documents/Programming/perl/"
+alias cdpy="cd ~/Documents/Programming/python/"
+alias cdps="cd ~/Documents/Programming/powershell/"

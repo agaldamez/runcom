@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# set default text editor
+export EDITOR=vim
+export VISUAL=vim
+
+# bash history
+export HISTSIZE=100000
+export HISTCONTROL=ignoredups
+export HISTFILESIZE=100000
+export HISTTIMEFORMAT="%F %T "
+
+# store history immediately
+export PROMPT_COMMAND="history -a"
+
+# bcrc
+export BC_ENV_ARGS=$HOME/.bcrc

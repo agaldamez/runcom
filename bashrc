@@ -1,15 +1,5 @@
-# ~/.bashrc file
-
-# source dockerfunc for docker run commands 
-if [[ -f ~/.dockerfunc ]]
-then
-   source ~/.dockerfunc
-fi
-
-# git branch bashrc
-parse_git_branch() {
-   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
+#!/bin/bash
+# ~/.bashrc
 
 # PS1 prompt with git branch 
 PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[91m\]$(parse_git_branch) \[\e[0;34m\]\$\[\e[;76m\] '
@@ -17,15 +7,14 @@ PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\[\033[91m\]$(parse_git_branch) \[\e[0;34
 #default PS1 prompt
 #PS1='\[\e[0;76m\][\u@\[\e[0;34m\]\h \W]\$\[\e[;76m\] '
 
-# set default text editor
-export EDITOR=vim
-export VISUAL=vim
-
-# bash history
-export HISTSIZE=100000
-export HISTCONTROL=ignoredups
-export HISTFILESIZE=100000
-export HISTTIMEFORMAT="%F %T "
+# source run commands files
+for file in ~/.{aliases,functions,path,dockerfunc,exports}
+do
+    if [[ -r "$file" ]] && [[ -f "$file" ]]
+    then 
+        source "$file"
+    fi
+done
 
 # store history immediately
 PROMPT_COMMAND='history -a'
@@ -34,6 +23,7 @@ PROMPT_COMMAND='history -a'
 stty -ixon
 
 # autocorrect typos in path names when using 'cd'
+<<<<<<< Updated upstream
 shopt -s cdspell 
 
 # reload bashrc
@@ -147,3 +137,6 @@ colour() {
         printf "\x1b[38;5;${i}mcolour${i}\x1b[0m\n"
     done
 }
+=======
+shopt -s cdspell
+>>>>>>> Stashed changes

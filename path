@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# add local home path
+export PATH="${HOME}/.local/bin:${PATH}"
+
+# Homebrew
+#export PATH="/opt/homebrew/bin:${PATH}"
+#export PATH="/opt/homebrew/sbin:${PATH}"
+
+# Remove duplicate $PATH entries
+PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
