@@ -57,6 +57,7 @@ start_ssh_agent() {
     then
         echo "ssh-key not in keyring"
         ssh-add
+        #ssh-add `ls ~/.ssh | grep -P 'id_rsa(?!.*pub)'`
     fi
 }
 start_ssh_agent
