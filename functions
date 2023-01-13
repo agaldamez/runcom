@@ -32,6 +32,11 @@ parse_git_branch() {
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
+# oc show server bashrc
+oc_show_server() {
+    oc whoami --show-server | awk -F "." '{print $2}'
+}
+
 # gpg-agent for ssh
 #start_gpg-agent() {
 #    if [ -z "$SSH_AUTH_SOCK" ]
@@ -61,3 +66,21 @@ start_ssh_agent() {
     fi
 }
 start_ssh_agent
+
+# Create a new directory and enter it
+mkd() {
+	mkdir -p "$@"
+	cd "$@" || exit
+}
+
+# colorized oc client
+oc() {
+    case $@ in
+        *exec*|*rsh*|*debug*|*json*)
+            ~/.local/bin/oc $@
+            ;;
+        *)
+            ~/.local/bin/oc $@ | ccze -Ao nolookups
+            ;;
+    esac    
+}
