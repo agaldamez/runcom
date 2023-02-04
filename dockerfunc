@@ -12,26 +12,17 @@ docker_rm(){
         docker rm "$name"
     fi
 }
+keepassx(){
+    docker_rm keepassx
 
-#ansible(){
-#    docker run -it --rm \
-#        -v "${PWD}:/root" \
-#        -v "${HOME}/.ssh:/root/.ssh:ro" \
-#        -e SSH_AUTH_SOCK \
-#        --workdir /root \
-#        --name ansible \
-#        ansible "$@"
-#}
-#ansible-playbook(){
-#    docker run -it --rm \
-#        -v ${PWD}:/etc/ansible \
-#        -v ${HOME}/.ssh:/root/.ssh:ro \
-#        -e SSH_AUTH_SOCK \
-#        --workdir /root \
-#        --entrypoint=ansible-playbook \
-#        --name ansible-playbook \
-#        ansible "$@"
-#}
+    xhost + 1> /dev/null
+	docker run -d \
+    -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v /home/$USER/${keepassdb}:/root/${keepassdb} \
+    -v /dev/dri/card0:/dev/dri/card0 \
+    --name keepassx keepassx
+}
 mysql-load(){
     docker run -d \
         -e MARIADB_ROOT_PASSWORD=password \
@@ -61,16 +52,21 @@ postman(){
         --name postman \
         postman
 }
-#terraform(){
-#    docker run -it --rm \
-#        -v "${HOME}/.ssh:/home/terraform/.ssh:ro" \
-#        -e SSH_AUTH_SOCK \
-#        -v "$(pwd):/usr/src/repo" \
-#        -v /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock \
-#        --workdir /usr/src/repo \
-#        --name terraform \
-#        terraform "$@"
-#}
+terraform(){
+    if [[ -n "$(which terraform)" ]]
+    then
+        "$(which terraform)" "$@"
+    else
+        docker run -it --rm \
+            -v "${HOME}/.ssh:/home/terraform/.ssh:ro" \
+            -e SSH_AUTH_SOCK \
+            -v "$(pwd):/usr/src/repo" \
+            -v /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock \
+            --workdir /usr/src/repo \
+            --name terraform \
+            terraform "$@"
+    fi
+}
 splunk(){
     docker run -d \
         -p 8000:8000 \
