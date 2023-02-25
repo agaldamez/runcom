@@ -23,6 +23,9 @@ alias open='xdg-open'
 alias ls="ls --color=always"
 alias whitespace="sed 's/ /·/g;s/\t/￫/g;s/\r/§/g;s/$/¶/g'"
 
+# which services own which process
+alias psc='ps xawf -eo pid,user,cgroup,args'
+
 # run virsh commands without sudo
 alias virsh="virsh --connect qemu:///system"
 
@@ -42,7 +45,4 @@ alias .....='cd ../../../..'
 
 # cd to frequently used directories:
 alias dl="cd ~/Downloads"
-alias cdsh="cd ~/Documents/Programming/bash/"
-alias cdpl="cd ~/Documents/Programming/perl/"
-alias cdpy="cd ~/Documents/Programming/python/"
-alias cdps="cd ~/Documents/Programming/powershell/"
+alias cdp="cd ~/Documents/Programming"

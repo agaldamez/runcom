@@ -9,6 +9,7 @@ export HISTSIZE=100000
 export HISTCONTROL=ignoredups
 export HISTFILESIZE=100000
 export HISTTIMEFORMAT="%F %T "
+export HISTIGNORE='ll:cd ..:t:sb:cd:vb:cd -'
 
 # store history immediately
 export PROMPT_COMMAND="history -a"

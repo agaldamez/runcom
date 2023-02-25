@@ -1,7 +1,10 @@
 #!/bin/sh
 
-# add local home path
+# add local bin home path
 export PATH="${HOME}/.local/bin:${PATH}"
+
+# add local scripts home path
+export PATH="${HOME}/.local/scripts:${PATH}"
 
 # Homebrew
 #export PATH="/opt/homebrew/bin:${PATH}"
