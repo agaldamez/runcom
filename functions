@@ -32,9 +32,20 @@ parse_git_branch() {
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-# oc show server bashrc
+# oc show server in bashrc
 oc_show_server() {
     oc whoami --show-server | awk -F "." '{print $2}'
+}
+
+# unset oc current context
+oc_unset() {
+    oc config unset current-context
+}
+
+# k8s show server in bashrc
+k8s_cluster() {
+    [ -f ~/.kube/config ] && cluster=$(grep '^current-context' ~/.kube/config | grep -o "\/.*\:" | tr -d "\/:")
+    [ -n "$cluster" ] && echo "($cluster)"
 }
 
 # gpg-agent for ssh
