@@ -30,6 +30,10 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 # run virsh commands without sudo
 alias virsh="virsh --connect qemu:///system"
 
+# k8s & oc icons
+k8s_img=$'\u2388'
+oc_img=$'\ue7b7'
+
 # docker shortcuts
 alias dkrm='docker rm $(docker ps -qa)'
 alias dkrmi='docker rmi $(docker images -q)'

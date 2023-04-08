@@ -45,7 +45,7 @@ oc_unset() {
 # k8s show server in bashrc
 k8s_cluster() {
     [ -f ~/.kube/config ] && cluster=$(grep '^current-context' ~/.kube/config | grep -o "\/.*\:" | tr -d "\/:")
-    [ -n "$cluster" ] && echo "($cluster)"
+    [ -n "$cluster" ] && echo "($k8s_img $cluster)"
 }
 
 # gpg-agent for ssh
