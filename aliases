@@ -24,6 +24,9 @@ alias open='xdg-open'
 alias ls="ls --color=always"
 alias whitespace="sed 's/ /·/g;s/\t/￫/g;s/\r/§/g;s/$/¶/g'"
 
+alias lines='tput lines'
+alias columns='tput cols'
+
 # which services own which process
 alias psc='ps xawf -eo pid,user,cgroup,args'
 
