@@ -20,6 +20,7 @@ alias chgrp='chgrp -v'
 alias chown='chown -v'
 alias diff='colordiff'
 alias wide-diff='diff -W $(tput cols)'
+alias wide-pr='pr -w $(tput cols) -m -t'
 alias open='xdg-open'
 alias ls="ls --color=always"
 alias whitespace="sed 's/ /·/g;s/\t/￫/g;s/\r/§/g;s/$/¶/g'"
