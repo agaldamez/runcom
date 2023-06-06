@@ -9,6 +9,9 @@ set number
 " Enable relative number
 set relativenumber
 
+" Enable linebreak for no break in the middle of a word
+set linebreak
+
 " Number of visual spaces per tab
 set tabstop=4
 
