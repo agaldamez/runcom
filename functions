@@ -103,5 +103,5 @@ awknl() {
 
 # remove extra whitespace
 rm-extra-whitespace() {
-    awk '{print $1=$1}'
+    awk '{$1=$1}'
 }
