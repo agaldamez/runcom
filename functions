@@ -95,3 +95,13 @@ oc() {
             ;;
     esac    
 }
+
+# print line numbers
+awknl() {
+    awk '{print NR, $0}'
+}
+
+# remove extra whitespace
+rm-extra-whitespace() {
+    awk '{print $1=$1}'
+}
