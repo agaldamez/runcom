@@ -1,16 +1,21 @@
 #!/bin/bash
 
+# print line numbers
+awknl() {
+    awk '{print NR, $0}'
+}
+
+# remove extra whitespace
+rm-extra-whitespace() {
+    awk '$1=$1'
+}
+
 # print 256-colour
 colour() {
 	for i in {0..255}
     do
         printf "\x1b[38;5;${i}mcolour${i}\x1b[0m\n"
     done
-}
-
-# search top 10 tags for a Docker image
-dockertags() {
-	curl -s "https://registry.hub.docker.com/v2/repositories/library/$1/tags/"|jq '."results"[]["name"]'
 }
 
 # colorized man pages
@@ -32,20 +37,41 @@ parse_git_branch() {
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-# oc show server in bashrc
-oc_show_server() {
-    oc whoami --show-server | awk -F "." '{print $2}'
-}
-
 # unset oc current context
 oc_unset() {
     oc config unset current-context
 }
 
+# oc show server in bashrc
+ocp_img=$'\ue7b7'
+ocp_cluster() {
+    if [ -f "$HOME/.kube/config" ]; then
+        cluster=$(grep '^current-context' "$HOME/.kube/config" | awk '$2 !~ /""/')
+    fi
+
+    if [ -n "$cluster" ]; then
+        echo "($ocp_img $(oc whoami --show-server | awk -F '.' '{print $2}'))"
+    fi
+}
+
 # k8s show server in bashrc
+k8s_img=$'\u2388'
 k8s_cluster() {
-    [ -f ~/.kube/config ] && cluster=$(grep '^current-context' ~/.kube/config | grep -o "\/.*\:" | tr -d "\/:")
-    [ -n "$cluster" ] && echo "($k8s_img $cluster)"
+    if [ -f "$HOME/.kube/config" ]; then
+        cluster=$(awk -F '[/:]' '/^current-context/ {print $3}' "$HOME/.kube/config")
+    fi
+
+    if [ -n "$cluster" ]; then
+        echo "($k8s_img $cluster)"
+    fi
+}
+
+k8s() {
+    if [[ $(hostname) = "fedora" ]]; then
+        k8s_cluster
+    else
+        ocp_cluster
+    fi
 }
 
 # gpg-agent for ssh
@@ -94,14 +120,4 @@ oc() {
             ~/.local/bin/oc $@ | ccze -Ao nolookups
             ;;
     esac    
-}
-
-# print line numbers
-awknl() {
-    awk '{print NR, $0}'
-}
-
-# remove extra whitespace
-rm-extra-whitespace() {
-    awk '$1=$1'
 }
