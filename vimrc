@@ -68,6 +68,9 @@ Plug 'tpope/vim-surround'
 " vim-terraform
 Plug 'hashivim/vim-terraform'
 
+" vim-helm
+Plug 'towolf/vim-helm'
+
 " Initialize plugin system
 call plug#end()
 
