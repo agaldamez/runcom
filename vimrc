@@ -44,11 +44,13 @@ call plug#begin('~/.vim/plugged')
 " vim-indent-guides
 Plug 'nathanaelkane/vim-indent-guides'
 
+" Enable vim indent guides 
+let g:indent_guides_enable_on_vim_startup = 1
+hi IndentGuidesOdd  ctermbg=black
+hi IndentGuidesEven ctermbg=darkgrey
+
 " vim-json
 Plug 'elzr/vim-json'
-
-" nerdtree
-Plug 'preservim/nerdtree'
 
 " vim-perl
 Plug 'vim-perl/vim-perl'
@@ -73,26 +75,3 @@ Plug 'towolf/vim-helm'
 
 " Initialize plugin system
 call plug#end()
-
-
-" NERDTreeToggle keyboard shortcuts
-map <C-n> :NERDTreeToggle<CR>
-nnoremap <C-c> :tabclose<CR>
-nnoremap <C-S-Right> :tabn<CR>
-nnoremap <C-S-Left>  :tabp<CR>
-
-" NERDTree vertical bar 
-highlight VertSplit cterm=NONE
-
-" NERDTree disable 'Press ? for help'
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-
-" Enable vim indent guides 
-let g:indent_guides_enable_on_vim_startup = 1
-hi IndentGuidesOdd  ctermbg=black
-hi IndentGuidesEven ctermbg=darkgrey
-
-" Open NERDTree automatically 
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
