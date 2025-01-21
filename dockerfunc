@@ -86,7 +86,9 @@ dockerdive(){
         wagoodman/dive:latest "$@"
 }
 signal(){
-	docker run -d --rm \
+    docker_rm signal
+
+	docker run -d \
     -e DISPLAY=$DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     --net=host \

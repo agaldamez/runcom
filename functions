@@ -111,13 +111,19 @@ mkd() {
 }
 
 # colorized oc client
-oc() {
-    case $@ in
-        *exec*|*rsh*|*debug*|*json*)
-            ~/.local/bin/oc $@
-            ;;
-        *)
-            ~/.local/bin/oc $@ | ccze -Ao nolookups
-            ;;
-    esac    
-}
+#oc() {
+#    local cmd=$(which ccze)
+#    
+#    if [ -n "$cmd" ]; then
+#        case "$@" in
+#            *exec*|*rsh*|*debug*|*json*|api-resources|*yaml*|*edit*)
+#                command oc "$@"
+#                ;;
+#            *)
+#                command oc "$@" | ccze -Ao nolookups
+#                ;;
+#        esac
+#    else
+#        command oc "$@"
+#    fi
+#}

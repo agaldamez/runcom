@@ -24,3 +24,23 @@ stty -ixon
 
 # autocorrect typos in path names when using 'cd'
 shopt -s cdspell
+
+# enable kubectl tab completion
+if hash kubectl 2> /dev/null; then
+    source <(kubectl completion bash)
+fi
+
+# enable minikube tab completion
+if hash minikube 2> /dev/null; then
+    source <(minikube completion bash)
+fi
+
+# enable oc tab completion
+if hash oc 2> /dev/null; then
+    source <(oc completion bash)
+fi
+
+# enable terraform tab completion
+if hash terraform 2> /dev/null; then
+    complete -C /usr/bin/terraform terraform
+fi
