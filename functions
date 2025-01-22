@@ -37,40 +37,44 @@ parse_git_branch() {
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-# unset oc current context
-oc_unset() {
-    oc config unset current-context
-}
-
-# oc show server in bashrc
-ocp_img=$'\ue7b7'
-ocp_cluster() {
-    if [ -f "$HOME/.kube/config" ]; then
-        cluster=$(grep '^current-context' "$HOME/.kube/config" | awk '$2 !~ /""/')
-    fi
-
-    if [ -n "$cluster" ]; then
-        echo "($ocp_img $(oc whoami --show-server | awk -F '.' '{print $2}'))"
-    fi
-}
-
-# k8s show server in bashrc
-k8s_img=$'\u2388'
-k8s_cluster() {
-    if [ -f "$HOME/.kube/config" ]; then
-        cluster=$(awk -F '[/:]' '/^current-context/ {print $3}' "$HOME/.kube/config")
-    fi
-
-    if [ -n "$cluster" ]; then
-        echo "($k8s_img $cluster)"
-    fi
-}
-
+# show k8s or ocp cluster in ps1
 k8s() {
     if [[ $(hostname) = "fedora" ]]; then
         k8s_cluster
     else
         ocp_cluster
+    fi
+}
+
+# unset kubectl current context
+k8s_unset() {
+    kubectl config unset current-context
+}
+
+# check if kube config exists
+kube_config_exists() {
+    [ -f "$HOME/.kube/config" ]
+}
+
+# show k8s cluster in bashrc
+k8s_img=$'\u2388'
+k8s_cluster() {
+    if kube_config_exists; then
+        cluster=$(awk -F '[/:]' '/^current-context/ {print $2}' "$HOME/.kube/config")
+        if [[ -n "$cluster" && ! "$cluster" = ' ""' ]]; then
+            echo "($k8s_img $cluster)"
+        fi
+    fi
+}
+
+# show ocp cluster in bashrc
+ocp_img=$'\ue7b7'
+ocp_cluster() {
+    if kube_config_exists; then
+        cluster=$(grep '^current-context' "$HOME/.kube/config" | awk '$2 !~ /""/')
+        if [[ -n "$cluster" && ! "$cluster" = ' ""' ]]; then
+            echo "($ocp_img $(oc whoami --show-server | awk -F '.' '{print $2}'))"
+        fi
     fi
 }
 
