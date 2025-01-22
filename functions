@@ -78,6 +78,18 @@ ocp_cluster() {
     fi
 }
 
+kubectl() {
+	if [ "$1" = "switch" ]; then
+	  if [ -n "$2" ]; then
+	    command kubectl config set-context --current --namespace="$2"
+	  else
+	    echo "Usage: kubectl switch <namespace>"
+	  fi
+	else
+	  command kubectl "$@"
+	fi
+}
+
 # gpg-agent for ssh
 #start_gpg-agent() {
 #    if [ -z "$SSH_AUTH_SOCK" ]
