@@ -60,7 +60,7 @@ splunk(){
         -e "SPLUNK_START_ARGS=--accept-license" \
         -e "SPLUNK_PASSWORD=password" \
         --name splunk \
-        splunk/splunk:8.2.2
+        splunk/splunk:9.4
 }
 virt-manager(){
     docker_rm virt-manager

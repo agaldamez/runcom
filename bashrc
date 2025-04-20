@@ -44,3 +44,8 @@ fi
 if hash terraform 2> /dev/null; then
     complete -C /usr/bin/terraform terraform
 fi
+
+# enable openstack tab completion
+if hash openstack 2> /dev/null; then
+    source <(openstack complete --shell bash)
+fi
