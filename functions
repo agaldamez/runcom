@@ -129,7 +129,7 @@ mkd() {
 # colorized oc client
 #oc() {
 #    local cmd=$(which ccze)
-#    
+#
 #    if [ -n "$cmd" ]; then
 #        case "$@" in
 #            *exec*|*rsh*|*debug*|*json*|api-resources|*yaml*|*edit*)
