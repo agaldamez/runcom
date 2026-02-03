@@ -46,38 +46,41 @@ k8s() {
     fi
 }
 
-# unset kubectl current context
-k8s_unset() {
-    kubectl config unset current-context
-}
-
 # check if kube config exists
 kube_config_exists() {
     [ -f "$HOME/.kube/config" ]
 }
 
 # show k8s cluster in bashrc
-k8s_img=$'\u2388'
+#k8s_img=$'\u2388'
 k8s_cluster() {
     if kube_config_exists; then
         cluster=$(awk -F '[/:]' '/^current-context/ {print $2}' "$HOME/.kube/config")
         if [[ -n "$cluster" && ! "$cluster" = ' ""' ]]; then
-            echo "($k8s_img $cluster)"
+            #echo "($k8s_img$cluster)"
+            echo "(⎈$cluster)"
         fi
     fi
 }
 
 # show ocp cluster in bashrc
-ocp_img=$'\ue7b7'
+#ocp_img=$'\ue7b7'
 ocp_cluster() {
     if kube_config_exists; then
         cluster=$(grep '^current-context' "$HOME/.kube/config" | awk '$2 !~ /""/')
         if [[ -n "$cluster" && ! "$cluster" = ' ""' ]]; then
-            echo "($ocp_img $(oc whoami --show-server | awk -F '.' '{print $2}'))"
+            #echo "($ocp_img $(oc whoami --show-server | awk -F '.' '{print $2}'))"
+            echo "(⎈$(oc whoami --show-server | awk -F '.' '{print $2}'))"
         fi
     fi
 }
 
+# unset kubectl current context
+k8s_unset() {
+    kubectl config unset current-context
+}
+
+# switch to another namespace
 kubectl() {
 	if [ "$1" = "switch" ]; then
 	  if [ -n "$2" ]; then
@@ -125,21 +128,3 @@ mkd() {
 	mkdir -p "$@"
 	cd "$@" || exit
 }
-
-# colorized oc client
-#oc() {
-#    local cmd=$(which ccze)
-#
-#    if [ -n "$cmd" ]; then
-#        case "$@" in
-#            *exec*|*rsh*|*debug*|*json*|api-resources|*yaml*|*edit*)
-#                command oc "$@"
-#                ;;
-#            *)
-#                command oc "$@" | ccze -Ao nolookups
-#                ;;
-#        esac
-#    else
-#        command oc "$@"
-#    fi
-#}
