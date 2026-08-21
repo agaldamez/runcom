@@ -42,16 +42,6 @@ network-miner(){
         --name network-miner \
         network-miner
 }
-postman(){
-    docker_rm postman
-
-    docker run -it -d \
-        -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v /home/$USER/.config/Postman:/home/developer/.config/Postman \
-        -e DISPLAY=$DISPLAY \
-        --name postman \
-        postman
-}
 splunk(){
     docker run -d \
         -p 8000:8000 \
@@ -64,7 +54,7 @@ splunk(){
 }
 virt-manager(){
     docker_rm virt-manager
-    
+
     xhost + 1> /dev/null
     docker run -d \
         -e DISPLAY=$DISPLAY \
