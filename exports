@@ -1,8 +1,13 @@
 #!/bin/bash
 
 # set default text editor
-export EDITOR=vim
-export VISUAL=vim
+if hash nvim 2> /dev/null; then
+    export EDITOR=nvim
+    export VISUAL=nvim
+else
+    export EDITOR=vim
+    export VISUAL=vim
+fi
 
 # bash history
 export HISTSIZE=100000
