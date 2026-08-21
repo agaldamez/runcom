@@ -4,6 +4,14 @@
 alias vb='vim ~/.bashrc'
 alias sb='. ~/.bashrc'
 
+# use nvim when available
+if hash nvim 2> /dev/null; then
+    alias vim='nvim'
+    alias vimdiff='nvim -d'
+fi
+
+# common aliases
+alias vim='nvim'
 alias ll='ls -l'
 alias lls='ls -la'
 alias t='tmux'
@@ -19,12 +27,13 @@ alias chmod='chmod -v'
 alias chgrp='chgrp -v'
 alias chown='chown -v'
 alias diff='colordiff'
+alias open='xdg-open'
 alias wide-diff='diff -W $(tput cols)'
 alias wide-pr='pr -w $(tput cols) -m -t'
-alias open='xdg-open'
 alias ls="ls --color=always"
 alias whitespace="sed 's/ /·/g;s/\t/￫/g;s/\r/§/g;s/$/¶/g'"
 
+# terminal display size
 alias lines='tput lines'
 alias columns='tput cols'
 
@@ -33,10 +42,6 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 
 # run virsh commands without sudo
 alias virsh="virsh --connect qemu:///system"
-
-# k8s & oc icons
-k8s_img=$'\u2388'
-oc_img=$'\ue7b7'
 
 # docker shortcuts
 alias dkrm='docker rm $(docker ps -qa)'
@@ -52,6 +57,8 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
-# cd to frequently used directories:
-alias dl="cd ~/Downloads"
-alias cdp="cd ~/Documents/Programming"
+# ai
+alias update-cursor-cli='curl -fsSL https://cursor.com/install | bash'
+alias update-codex='sudo npm install -g @openai/codex@latest'
+alias update-claude='claude update'
+alias update-copilot='sudo npm install -g @github/copilot@latest'
