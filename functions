@@ -33,8 +33,22 @@ man() {
 }
 
 # git branch bashrc
+# parse_git_branch() {
+# 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+# }
 parse_git_branch() {
-	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    local ref
+    local git_icon=$'\uf126'
+    if ref=$(git symbolic-ref --quiet --short HEAD 2>/dev/null); then
+        printf ' (%s %s)' "$git_icon" "$ref"
+        return
+    fi
+    # Detached, rebase, bisect, cherry-pick, etc.
+    git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return
+    ref=$(git branch 2>/dev/null | sed -n 's/^\* (\(.*\))$/\1/p')
+    if [[ -n "$ref" ]]; then
+        printf ' (%s %s)' "$git_icon" "$ref"
+    fi
 }
 
 # show k8s or ocp cluster in ps1
