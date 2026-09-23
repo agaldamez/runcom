@@ -42,7 +42,7 @@ fi
 
 # enable terraform tab completion
 if hash terraform 2> /dev/null; then
-    complete -C /usr/bin/terraform terraform
+    complete -C terraform terraform
 fi
 
 # enable openstack tab completion

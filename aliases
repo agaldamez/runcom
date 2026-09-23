@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# reload bashrc
+# edit and reload bashrc
 alias vb='vim ~/.bashrc'
 alias sb='. ~/.bashrc'
 
@@ -10,8 +10,12 @@ if hash nvim 2> /dev/null; then
     alias vimdiff='nvim -d'
 fi
 
+# open a file or URL (macOS has open built-in)
+if [[ "$uname" == "Linux" ]]; then
+    alias open='xdg-open'
+fi
+
 # common aliases
-alias vim='nvim'
 alias ll='ls -l'
 alias lls='ls -la'
 alias t='tmux'
@@ -27,7 +31,6 @@ alias chmod='chmod -v'
 alias chgrp='chgrp -v'
 alias chown='chown -v'
 alias diff='colordiff'
-alias open='xdg-open'
 alias wide-diff='diff -W $(tput cols)'
 alias wide-pr='pr -w $(tput cols) -m -t'
 alias ls="ls --color=always"
