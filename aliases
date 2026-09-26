@@ -7,7 +7,6 @@ alias sb='. ~/.bashrc'
 # use nvim when available
 if hash nvim 2> /dev/null; then
     alias vim='nvim'
-    alias vimdiff='nvim -d'
 fi
 
 # open a file or URL (macOS has open built-in)
