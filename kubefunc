@@ -1,0 +1,86 @@
+#!/bin/bash
+
+# k8s specific functions
+#
+# unset kubectl current context
+k8s_unset() {
+    command kubectl config unset current-context
+}
+
+# show k8s or ocp cluster in ps1
+k8s() {
+    if [[ $(hostname) = "fedora" ]]; then
+        k8s_cluster
+    else
+        ocp_cluster
+    fi
+}
+
+# check if kube config exists
+kube_config_exists() {
+    [ -f "$HOME/.kube/config" ]
+}
+
+# show k8s cluster in bashrc
+#k8s_img=$'\u2388'
+k8s_cluster() {
+    if kube_config_exists; then
+        cluster=$(awk -F '[/:]' '/^current-context/ {print $2}' "$HOME/.kube/config")
+        if [[ -n "$cluster" && ! "$cluster" = ' ""' ]]; then
+            #echo "($k8s_img$cluster)"
+            echo "(⎈$cluster)"
+        fi
+    fi
+}
+
+# show ocp cluster in bashrc
+#ocp_img=$'\ue7b7'
+ocp_cluster() {
+    if kube_config_exists; then
+        cluster=$(grep '^current-context' "$HOME/.kube/config" | awk '$2 !~ /""/')
+        if [[ -n "$cluster" && ! "$cluster" = ' ""' ]]; then
+            #echo "($ocp_img $(oc whoami --show-server | awk -F '.' '{print $2}'))"
+            echo "(⎈$(oc whoami --show-server | awk -F '.' '{print $2}'))"
+        fi
+    fi
+}
+
+# interactive live pod streamer
+kfzf-logs() {
+  local pod=$(kubectl get pods --no-headers | fzf --height 40% --layout=reverse --border | awk '{print $1}')
+  if [ -n "$pod" ]; then
+    # Count containers in the pod
+    local cc=$(kubectl get pod "$pod" -o jsonpath='{.spec.containers[*].name}' | wc -w)
+    if [ "$cc" -gt 1 ]; then
+      # If multi-container, pick the container via fzf
+      local container=$(kubectl get pod "$pod" -o jsonpath='{.spec.containers[*].name}' | tr ' ' '\n' | fzf --height 20% --prompt="Select Container: ")
+      [ -n "$container" ] && kubectl stern "$pod" -c "$container"
+    else
+      kubectl stern "$pod"
+    fi
+  fi
+}
+
+# switch to another namespace
+kubectl() {
+    if [[ "$1" == "switch" ]]; then
+        shift
+        if [[ -n "$1" ]]; then
+            command kubectl config set-context --current --namespace="$1"
+        else
+            kns
+        fi
+        return
+    fi
+    command kubectl "$@"
+
+# switch to another namespace using fzf
+}
+kns() {
+    local ns
+    ns=$(command kubectl get namespaces --no-headers 2>/dev/null \
+        | awk '{print $1}' \
+        | fzf --height 40% --layout=reverse --border --prompt="Namespace: ") || return
+    [[ -n "$ns" ]] || return
+    command kubectl config set-context --current --namespace="$ns"
+}

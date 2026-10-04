@@ -7,7 +7,7 @@ if [[ -f /etc/bashrc ]]; then
 fi
 
 # source user run commands files
-for file in ~/.{aliases,functions,path,dockerfunc,exports,additions}
+for file in ~/.{aliases,functions,path,dockerfunc,kubefunc,exports,additions}
 do
     if [[ -r "$file" ]] && [[ -f "$file" ]]
     then

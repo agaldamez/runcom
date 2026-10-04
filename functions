@@ -10,6 +10,12 @@ rm-extra-whitespace() {
     awk '$1=$1'
 }
 
+# Create a new directory and enter it
+mkd() {
+	mkdir -p "$@"
+	cd "$@" || exit
+}
+
 # print 256-colour
 colour() {
 	for i in {0..255}
@@ -51,62 +57,6 @@ parse_git_branch() {
     fi
 }
 
-# show k8s or ocp cluster in ps1
-k8s() {
-    if [[ $(hostname) = "fedora" ]]; then
-        k8s_cluster
-    else
-        ocp_cluster
-    fi
-}
-
-# check if kube config exists
-kube_config_exists() {
-    [ -f "$HOME/.kube/config" ]
-}
-
-# show k8s cluster in bashrc
-#k8s_img=$'\u2388'
-k8s_cluster() {
-    if kube_config_exists; then
-        cluster=$(awk -F '[/:]' '/^current-context/ {print $2}' "$HOME/.kube/config")
-        if [[ -n "$cluster" && ! "$cluster" = ' ""' ]]; then
-            #echo "($k8s_img$cluster)"
-            echo "(⎈$cluster)"
-        fi
-    fi
-}
-
-# show ocp cluster in bashrc
-#ocp_img=$'\ue7b7'
-ocp_cluster() {
-    if kube_config_exists; then
-        cluster=$(grep '^current-context' "$HOME/.kube/config" | awk '$2 !~ /""/')
-        if [[ -n "$cluster" && ! "$cluster" = ' ""' ]]; then
-            #echo "($ocp_img $(oc whoami --show-server | awk -F '.' '{print $2}'))"
-            echo "(⎈$(oc whoami --show-server | awk -F '.' '{print $2}'))"
-        fi
-    fi
-}
-
-# unset kubectl current context
-k8s_unset() {
-    kubectl config unset current-context
-}
-
-# switch to another namespace
-kubectl() {
-	if [ "$1" = "switch" ]; then
-	  if [ -n "$2" ]; then
-	    command kubectl config set-context --current --namespace="$2"
-	  else
-	    echo "Usage: kubectl switch <namespace>"
-	  fi
-	else
-	  command kubectl "$@"
-	fi
-}
-
 # gpg-agent for ssh
 #start_gpg-agent() {
 #    if [ -z "$SSH_AUTH_SOCK" ]
@@ -136,9 +86,3 @@ start_ssh_agent() {
     fi
 }
 start_ssh_agent
-
-# Create a new directory and enter it
-mkd() {
-	mkdir -p "$@"
-	cd "$@" || exit
-}
