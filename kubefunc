@@ -28,7 +28,7 @@ k8s_cluster() {
         cluster=$(awk -F '[/:]' '/^current-context/ {print $2}' "$HOME/.kube/config")
         if [[ -n "$cluster" && ! "$cluster" = ' ""' ]]; then
             #echo "($k8s_img$cluster)"
-            echo "(⎈$cluster)"
+            echo "(⎈ $cluster)"
         fi
     fi
 }
@@ -40,7 +40,7 @@ ocp_cluster() {
         cluster=$(grep '^current-context' "$HOME/.kube/config" | awk '$2 !~ /""/')
         if [[ -n "$cluster" && ! "$cluster" = ' ""' ]]; then
             #echo "($ocp_img $(oc whoami --show-server | awk -F '.' '{print $2}'))"
-            echo "(⎈$(oc whoami --show-server | awk -F '.' '{print $2}'))"
+            echo "(⎈ $(oc whoami --show-server | awk -F '.' '{print $2}'))"
         fi
     fi
 }

@@ -10,7 +10,7 @@ if hash nvim 2> /dev/null; then
 fi
 
 # open a file or URL (macOS has open built-in)
-if [[ "$uname" == "Linux" ]]; then
+if [[ "$(uname)" == "Linux" ]]; then
     alias open='xdg-open'
 fi
 
